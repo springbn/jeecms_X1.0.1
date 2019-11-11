@@ -1,0 +1,78 @@
+<br>
+
+<label for="endTime">日志展示：</label>
+
+<div class="conWrap">
+
+<div id="log-container" style="height:800px;overflow-y:scroll;background:#333;color:#aaa;padding:10px;">
+
+<div>
+
+<table id="conversation" class="table table-striped">
+
+<tbody id="greetings"></tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
+<script>
+
+var websocket=null;
+
+if('WebSocket' in window){
+
+websocket=new WebSocket('ws://localhost:8080/webSocket');
+
+}else{
+
+alert('该浏览器不支持websocket');
+
+}
+
+websocket.onopen=function (ev) {
+
+console.log('建立连接');
+
+console.log(ev);
+
+};
+
+websocket.onclose=function (ev) {
+
+console.log('连接关闭');
+
+console.log(ev);
+
+};
+
+websocket.onmessage=function (ev) {
+
+console.log('收到消息：'+ev.data);
+
+console.log(ev);
+
+//弹窗提醒，播放消息
+
+//            $("#log-container div").append(ev.data);
+
+        $("#greetings").append("<tr><td style='background: #333; color: #aaa;float: left;border: none'>" + ev.data +"</td></tr>");
+
+// 滚动条滚动到最低部
+
+        $("#log-container").scrollTop($("#log-container div").height() -$("#log-container").height());
+
+};
+
+window.onbeforeunload=function (ev) {
+
+websocket.close();
+
+}
+
+</script>

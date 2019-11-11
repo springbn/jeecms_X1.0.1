@@ -1,0 +1,110 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<link href="${res}/css/swiper.min.css" rel="stylesheet">
+<link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${res}/css/common.css">
+<link rel="stylesheet" href="${res}/css/toast.css">
+<script src="https://unpkg.com/babel-standalone@6.26.0/babel.min.js"></script>
+<script src="${res}/lib/vue.js"></script>
+<script src="${res}/lib/jquery.min.js"></script>
+<script src="${res}/lib/toast.js"></script>
+<script src="${res}/lib/element-ui.js"></script>
+<link rel="stylesheet" href="${res}/css/element-ui.css">
+<script src="${res}/lib/swiper.min.js"></script>
+<script src="${res}/js/magnifier-1.0.min.js"></script>
+<script src="${res}/lib/stickUp.min.js"></script>
+<script src="${res}/lib/clamp.min.js"></script>
+<script>
+function showFrameLogin (paams) {   
+  $('body').css({
+    "overflow-x":"hidden",
+    "overflow-y":"hidden"
+})
+   $('body').append('<div class="frame-login__warpper" id="loginFrame"><iframe  class="frame-login"  src="${base}/frame-login.htm"></iframe></div>') 
+}
+</script>
+ <script>
+    var csrfObject={
+      [#if crf??]
+      name: "${csrfToken.headerName!}",
+      value:"${csrfToken.token!}"
+     [#else]
+      name:"",
+        value:""
+     [/#if]
+    }
+ </script>
+<script src="${res}/js/cms.js"></script>
+<script src="${res}/js/common.js"></script>
+<script>
+  cms.url='${base}'
+  cms.imgUrl='${base}'
+</script>
+<script>
+$(function () {
+  //广告版位跳转
+  $('body').on('click','.JsLink',function (e) {
+      e.preventDefault()
+    var type= parseInt($(this).attr('data-type'))
+    var target=$(this).attr('data-target')
+    var productId=$(this).attr('data-productid')
+    var storeId=$(this).attr('data-storeid')
+    var articleId=$(this).attr('data-articleid')
+    var productCateId=$(this).attr('data-productcateid')
+    var linkUrl=$(this).attr('data-linkurl')
+    //链接类型 1-商品  2-店铺  3- 文章  4-商品分类  5-固定url
+
+    switch (type) {
+      case 1:
+          if(target==1){
+              location.href="${base}/product-detail.htm?productId="+productId
+          } else{
+            window.open("${base}/product-detail.htm?productId="+productId)
+          }  
+        break;
+        case 2:
+        if(target==1){
+              location.href="${base}/store-index.htm?storeId="+storeId
+          } else{
+            window.open("${base}/store-index.htm?storeId="+storeId)
+          }  
+        break;
+        case 3:
+        if(target==1){
+              location.href="${base}/helpCenter.htm?cateId=2&articleId="+articleId
+          } else{
+            window.open("${base}/helpCenter.htm?cateId=2&articleId="+articleId)
+          }  
+        break;
+        case 4:
+        console.log('ok')
+        if(target==1){
+              location.href="${base}/product-category.htm?ctgId="+productCateId
+          } else{
+            window.open("${base}/product-category.htm?ctgId="+productCateId)
+          }  
+        break;
+        case 5:
+        if(target==1){
+              location.href=linkUrl
+          } else{
+            window.open(linkUrl)
+          }  
+        break;
+      default:
+        return false
+        break;
+    }
+  });
+
+  var ellipsis = document.getElementsByClassName('ellipsis');
+  $clamp(ellipsis,{clamp:2});
+});
+
+</script>
+<style>
+[v-cloak] {
+  display: none !important;
+}
+</style>
